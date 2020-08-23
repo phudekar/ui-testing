@@ -1,44 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Testing Single Page Applications
 
-## Available Scripts
+## Background:
+There many ways to test the frontend of a web application. Most widely used has been to test application as a user would use using Selenium Webdriver or similar libraries. This meant that you have to write test for each and every scenario as a user workflow.
 
-In the project directory, you can run:
+This made our very test slow and delayed the whole Test Driven Development cycle. That lead most UI developers to only write their code and let the UI Automation teams writing test for them.
 
-### `npm start`
+It is not difficult to see then that dependency on multiple teams
+delayed the feedback cycle. Thus delaying the continuous delivery process.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+But today we are mainly going focus on testing Single Page Applications (SPA).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Modern SPA frameworks like React, Angular and Vue.js use component based approach to build UI by composing smaller components together. This provides us an opportunity to test our application logic at component level as well as the complete app as a black box.
 
-### `npm test`
+Because of this granularity of modern SPA testing our testing pyramid would usually look like following:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![UI Testing Pyramid](https://raw.githubusercontent.com/phudekar/ui-testing/master/public/UI_Testing_Pyramid.png)
 
-### `npm run build`
+Lets look at each one of them from top to bottom.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Unit Tests:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+These are your tests for plain old Javascript functions and classes that you are writing as part of the application. These may include any domain classes, functional utilities or more specifically the helper functions of the UI components. Because these tests usually don't depend on any other code or library you should be able to write test each and every use case of these functions. There are many framework available in Javascript to test this kind of Javascript objects. Most commonly used are [Jasmine](https://jasmine.github.io/), [Mocha](https://mochajs.org/) and [Jest](https://jestjs.io/).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
