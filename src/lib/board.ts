@@ -5,10 +5,12 @@ class Board {
     private rows: number;
     private columns: number;
     private _blocks: Block[][];
+    private _minePositions: Position[];
 
     constructor(rows: number, columns: number) {
         this.rows = rows;
         this.columns = columns;
+        this._minePositions = [];
         this._blocks = new Array(this.rows).fill(0)
             .map((_, r) => new Array(this.columns).fill(0)
                 .map((_, c) => new Block(new Position(r, c))));
@@ -19,6 +21,7 @@ class Board {
     }
 
     plantMines(positions: Position[]) {
+        this._minePositions = positions;
         positions.forEach(pos => {
             this._blocks[pos.row][pos.column] = new Block(pos, true)
         });
@@ -34,12 +37,9 @@ class Board {
         const { mineExploded, nearbyBombs } = block.reveal(neighbors);
 
         if (mineExploded) {
-            this.blocks
-                .forEach(row =>
-                    row.forEach(b => {
-                        b.reveal([]);
-                    })
-                );
+            this._minePositions.forEach(pos => {
+                this._blocks[pos.row][pos.column].reveal([]);
+            })
             return { mineExploded: true, nearbyBombs: -1 };
         }
 
