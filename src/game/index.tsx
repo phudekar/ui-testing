@@ -6,7 +6,8 @@ import BoardComponent from './Board';
 class Game extends React.Component {
     state: {
         board: Board,
-        gameOver?: boolean
+        gameOver?: boolean,
+        gameComplete?: boolean
     }
 
     constructor(props: any) {
@@ -26,11 +27,46 @@ class Game extends React.Component {
         this.setState({ gameOver: true });
     }
 
+    onGameComplete() {
+        this.setState({ gameComplete: true });
+    }
+
+    reset() {
+        this.setState({
+            board: this.getBoard(10, 10, 10),
+            gameOver: false
+        });
+    }
+
     render() {
         return (
             <div>
                 <div className="title">Minesweeper</div>
-                <BoardComponent board={this.state.board} onGameOver={() => this.onGameOver()} />
+                {
+                    this.state.gameComplete && <div className="success">
+                        Congratulations! You flagged all the mines.
+                        <div>
+                            <button className="retry-button" onClick={() => this.reset()}>
+                                Play Again
+                            </button>
+                        </div>
+                    </div>
+                }
+                <BoardComponent board={this.state.board}
+                    disabled={this.state.gameOver || this.state.gameComplete}
+                    onGameOver={() => this.onGameOver()}
+                    onGameComplete={() => this.onGameComplete()} />
+                {
+                    this.state.gameOver === true && <div className="overlay">
+                        <div className="game-over">
+                            Game Over!
+                        </div>
+                        <button className="retry-button" onClick={() => this.reset()}>
+                            Retry
+                        </button>
+                    </div>
+                }
+
             </div>
         )
     }
@@ -46,7 +82,6 @@ export const getRandomPositions = (rows: number, columns: number, count: number)
             index--;
         }
     }
-    console.log(positions);
     return positions;
 }
 

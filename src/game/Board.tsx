@@ -1,43 +1,61 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Board from '../lib/board';
 import Block from '../lib/block';
 import BlockComponent from './Block';
 
-const BoardComponent = ({ board, onGameOver }: BoardProps) => {
-    const [boardState, setBoardState] = useState({ board, disabled: false });
-
-    const reveal = (block: Block) => {
-        board = boardState.board;
-        const { mineExploded } = board.reveal(block.position)
-        if (mineExploded && onGameOver) {
-            onGameOver();
-            setBoardState({ board, disabled: true });
-        } else {
-            setBoardState({ board, disabled: false });
+class BoardComponent extends React.Component<BoardProps> {
+    state: {
+        board: Board
+    };
+    constructor(props: BoardProps) {
+        super(props);
+        this.state = {
+            board: this.props.board
         }
     }
 
-    return <div data-testid="board" className="board">
-        {
-            [...boardState.board.blocks].map((row, i) => <div key={'r' + (i + 1)} className="row">{
-                row.map((block, j) =>
-                    <BlockComponent key={`b-${i + 1}-${j + 1}`} block={block}
-                        disabled={boardState.disabled}
-                        onReveal={() => reveal(block)}
-                        toggleFlagged={() => {
-                            block.flagged ? block.unflag() : block.flag();
-                            setBoardState({ board: boardState.board, disabled: false })
-                        }}
-                    />
-                )}
-            </div>
-            )
+    componentWillReceiveProps(props: BoardProps) {
+        this.setState({ board: Object.create(props.board) })
+    }
+
+    reveal(block: Block) {
+        const { mineExploded } = this.state.board.reveal(block.position)
+        if (mineExploded && this.props.onGameOver) {
+            this.props.onGameOver();
         }
-    </div>
+        this.setState({ board: Object.create(this.state.board) });
+    }
+
+    toggleFlagged(block: Block) {
+        this.state.board.toggleFlag(block.position);
+        if (this.state.board.allMinesFlagged() && this.props.onGameComplete) {
+            this.props.onGameComplete();
+        }
+        this.setState({ board: Object.create(this.state.board) });
+    }
+
+    render() {
+        return <div data-testid="board" className="board" >
+            {
+                this.state.board?.blocks?.map((row, i) => <div key={'r' + (i + 1)} className="row">{
+                    row.map((block, j) =>
+                        <BlockComponent key={`b-${i + 1}-${j + 1}`} block={block}
+                            disabled={this.props.disabled}
+                            onReveal={() => this.reveal(block)}
+                            toggleFlagged={() => this.toggleFlagged(block)}
+                        />
+                    )}
+                </div>
+                )
+            }
+        </div >
+    }
 }
 
 interface BoardProps {
     board: Board,
+    disabled?: boolean,
+    onGameComplete?: Function,
     onGameOver?: Function
 }
 
