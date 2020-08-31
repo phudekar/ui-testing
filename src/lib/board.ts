@@ -19,7 +19,7 @@ class Board {
     }
 
     allMinesFlagged(): boolean {
-        console.log(this._flaggedMines, this._minePositions.length);
+        // console.log(this._flaggedMines, this._minePositions.length);
         return this._flaggedMines === this._minePositions.length;
     }
 
