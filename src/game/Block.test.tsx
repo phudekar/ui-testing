@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Component from './Block';
+import BlockComponent from './Block';
 import Block from '../lib/block';
 import Position from '../lib/position';
 
@@ -9,7 +9,7 @@ describe('BlockComponent', () => {
 
     it('should not be revealed by default', () => {
         const block = new Block(position);
-        const { getByTestId } = render(<Component block={block} />);
+        const { getByTestId } = render(<BlockComponent block={block} />);
 
         const root = getByTestId(`block-${position.row}-${position.column}`);
 
@@ -21,7 +21,7 @@ describe('BlockComponent', () => {
         const block = new Block(position);
         const reveal = jest.fn();
 
-        const { getByTestId } = render(<Component block={block} onReveal={reveal} />);
+        const { getByTestId } = render(<BlockComponent block={block} onReveal={reveal} />);
 
         const root = getByTestId(`block-${position.row}-${position.column}`);
         fireEvent.click(root);
@@ -33,7 +33,7 @@ describe('BlockComponent', () => {
         const block = new Block(position);
         const toggleFlagged = jest.fn();
 
-        const { getByTestId } = render(<Component block={block} toggleFlagged={toggleFlagged} />);
+        const { getByTestId } = render(<BlockComponent block={block} toggleFlagged={toggleFlagged} />);
 
         const root = getByTestId(`block-${position.row}-${position.column}`);
 
@@ -46,7 +46,7 @@ describe('BlockComponent', () => {
         const block = new Block(position);
         block.reveal([]);
 
-        const { getByTestId } = render(<Component block={block} />);
+        const { getByTestId } = render(<BlockComponent block={block} />);
 
         const root = getByTestId(`block-${position.row}-${position.column}`);
 
@@ -57,20 +57,24 @@ describe('BlockComponent', () => {
         const block = new Block(position);
         block.flag();
 
-        const { queryByAltText } = render(<Component block={block} />);
+        const { container } = render(<BlockComponent block={block} />);
 
-        expect(queryByAltText('flag')).toBeVisible();
+        expect(container.querySelector('.flag')).toBeVisible();
     })
 
     it('should show bomb if revealed and exploded', () => {
-        const { queryByAltText } = render(<Component block={{ revealed: true, exploded: true }} />);
+        const { container } = render(
+            <BlockComponent block={{ revealed: true, exploded: true }} />
+        );
 
-        expect(queryByAltText('bomb')).toBeVisible();
+        expect(container.querySelector('.bomb')).toBeVisible();
     })
 
     it('should show number of nearByBombs if revealed', () => {
 
-        const { queryByText } = render(<Component block={{ revealed: true, nearbyBombs: 2 }} />);
+        const { queryByText } = render(
+            <BlockComponent block={{ revealed: true, nearbyBombs: 2 }} />
+        );
 
         expect(queryByText("2")).toBeVisible();
     })

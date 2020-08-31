@@ -34,7 +34,8 @@ class Game extends React.Component {
     reset() {
         this.setState({
             board: this.getBoard(10, 10, 10),
-            gameOver: false
+            gameOver: false,
+            gameComplete: false,
         });
     }
 
@@ -73,13 +74,14 @@ class Game extends React.Component {
 }
 
 export const getRandomPositions = (rows: number, columns: number, count: number): Position[] => {
-    const positions = [];
+    const positions: Position[] = [];
     for (let index = 0; index < count; index++) {
         const row = Math.floor(Math.random() * rows);
         const col = Math.floor(Math.random() * columns);
-        positions.push(new Position(row, col));
-        if (positions.length < index + 1) {
+        if (positions.find(ps => ps.row === row && ps.column === col)) {
             index--;
+        } else {
+            positions.push(new Position(row, col));
         }
     }
     return positions;

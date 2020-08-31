@@ -1,15 +1,15 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Component from './Board';
+import BoardComponent from './Board';
 import Board from '../lib/board';
 import Position from '../lib/position';
 
-describe('Board', () => {
+describe('BoardComponent', () => {
     it('should display rows and columns of blocks', () => {
         const rows = 5;
         const columns = 5;
         const board = new Board(rows, columns);
-        const { getByTestId, container } = render(<Component board={board} />)
+        const { getByTestId, container } = render(<BoardComponent board={board} />)
 
         expect(getByTestId('board').classList).toContain('board');
 
@@ -27,7 +27,7 @@ describe('Board', () => {
         const rows = 5;
         const columns = 5;
         const board = new Board(rows, columns);
-        const { container } = render(<Component board={board} />)
+        const { container } = render(<BoardComponent board={board} />)
 
         const block = container.querySelectorAll('.block')[0];
         fireEvent.click(block);
@@ -39,7 +39,7 @@ describe('Board', () => {
         const rows = 5;
         const columns = 5;
         const board = new Board(rows, columns);
-        const { container } = render(<Component board={board} />)
+        const { container } = render(<BoardComponent board={board} />)
 
         const block = container.querySelectorAll('.block')[0];
 
@@ -58,7 +58,7 @@ describe('Board', () => {
 
         const gameOver = jest.fn();
 
-        const { container } = render(<Component board={board} onGameOver={gameOver} />)
+        const { container } = render(<BoardComponent board={board} onGameOver={gameOver} />)
 
         const blockWithMine = container.querySelectorAll('.block')[0];
         fireEvent.click(blockWithMine);
