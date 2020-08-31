@@ -13,11 +13,11 @@ Modern SPA frameworks like React, Angular and Vue.js use component based approac
 
 Because of this granularity of modern SPA testing our testing pyramid would usually look like following:
 
-![UI Testing Pyramid](https://raw.githubusercontent.com/phudekar/ui-testing/master/public/UI_Testing_Pyramid.png)
+![UI Testing Pyramid](public/UI_Testing_Pyramid.png)
 
 Lets look at each one of them from top to bottom. To demonstrate various types of tests, I have created a [sample implementation of a MineSweeper Game in React](https://github.com/phudekar/ui-testing).
 
-![](https://raw.githubusercontent.com/phudekar/ui-testing/master/public/demo.gif)
+![](public/demo.gif)
 
 ### 1. Unit Tests:
 
