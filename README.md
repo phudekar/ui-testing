@@ -1,6 +1,5 @@
 # Testing Single Page Applications
 
-## Background:
 There are many ways to test the frontend of a web application. Most widely used has been to test application as a user would use using Selenium Webdriver or similar libraries. This meant that you have to write test for each and every scenario as a user workflow.
 
 This made our very test slow and delayed the whole Test Driven Development cycle. That lead most UI developers to only write their code and let the UI Automation teams writing test for them.
@@ -16,7 +15,9 @@ Because of this granularity of modern SPA testing our testing pyramid would usua
 
 ![UI Testing Pyramid](https://raw.githubusercontent.com/phudekar/ui-testing/master/public/UI_Testing_Pyramid.png)
 
-Lets look at each one of them from top to bottom.
+Lets look at each one of them from top to bottom. To demonstrate various types of tests, I have created a [sample implementation of a MineSweeper Game in React](https://github.com/phudekar/ui-testing).
+
+![](https://raw.githubusercontent.com/phudekar/ui-testing/master/public/demo.gif)
 
 ### 1. Unit Tests:
 
@@ -122,4 +123,34 @@ it('should reveal block', () => {
 
 ### 4. End to End Tests:
 
-These tests
+After testing all our components in isolation of groups we still need to make sure that our app works end to end without stubbing any of its components. The goal of end to end (e2e) tests is to test our app as an user. We can not assume any internals of the applications. We should treat it as a complete black box and assert the behaviour completely on the outcome of user actions.
+
+As part of our previous steps to test various use cases of each individual components in unit or integration tests, e2e test don't need to cover all the scenarios. Ideally we should write only few e2e tests to check the overall sanity of the app. Because we are testing our app as an end user we should execute our tests by rendering our SAP in a real browser. The can sometime cause e2e tests to take more time compared to its counterparts. 
+
+There are many ways to execute e2e tests in browser, for example using [Selenium Web Driver](https://www.selenium.dev/documentation/en/getting_started_with_webdriver/), [Puppeteer](https://developers.google.com/web/tools/puppeteer) or [Cypress](https://www.cypress.io/)
+
+In our example project I have used Cypress to run my e2e scenario in chrome browser. The Cypress tests are located under `cypress/integration/minesweeper/`.
+
+An typical cypress test looks like:
+
+```typescript
+it('should toggle flag of a block', () => {
+    cy.visit("/");
+
+    cy.get(".flag")
+        .should("not.be.visible");
+
+    const block = cy.get(".block").first();
+
+    block.rightclick();
+
+    cy.get(".flag")
+        .should("be.visible");
+
+    block.rightclick();
+
+    cy.get(".flag")
+        .should("not.be.visible");
+})
+
+``` 
