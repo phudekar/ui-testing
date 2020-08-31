@@ -119,3 +119,7 @@ it('should reveal block', () => {
 })
 
 ```
+
+### 4. End to End Tests:
+
+These tests

@@ -14,8 +14,8 @@ class BoardComponent extends React.Component<BoardProps> {
         }
     }
 
-    componentWillReceiveProps(props: BoardProps) {
-        this.setState({ board: Object.create(props.board) })
+    static getDerivedStateFromProps(props: BoardProps, state: any): any {
+        return { board: props.board };
     }
 
     reveal(block: Block) {
@@ -23,7 +23,7 @@ class BoardComponent extends React.Component<BoardProps> {
         if (mineExploded && this.props.onGameOver) {
             this.props.onGameOver();
         }
-        this.setState({ board: Object.create(this.state.board) });
+        this.setState({ board: this.state.board });
     }
 
     toggleFlagged(block: Block) {
@@ -31,7 +31,7 @@ class BoardComponent extends React.Component<BoardProps> {
         if (this.state.board.allMinesFlagged() && this.props.onGameComplete) {
             this.props.onGameComplete();
         }
-        this.setState({ board: Object.create(this.state.board) });
+        this.setState({ board: this.state.board });
     }
 
     render() {
