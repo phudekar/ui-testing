@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitForDomChange, wait } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { StateMock } from '@react-mock/state';
 import Game from '.';
 
@@ -55,5 +55,23 @@ describe('Game', () => {
         fireEvent.click(getByText('Retry'));
 
         expect(queryByText('Game Over!')).toBeNull();
+    })
+
+    it('should render component in default state', () => {
+        const { container } = render(
+            <StateMock >
+                <Game />
+            </StateMock>);
+
+        expect(container.firstChild).toMatchSnapshot();
+    })
+
+    it('should render component in game over state', () => {
+        const { container } = render(
+            <StateMock state={{ gameOver: true }}  >
+                <Game />
+            </StateMock>);
+
+        expect(container.firstChild).toMatchSnapshot();
     })
 })

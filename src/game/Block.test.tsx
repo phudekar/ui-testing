@@ -60,6 +60,7 @@ describe('BlockComponent', () => {
         const { container } = render(<BlockComponent block={block} />);
 
         expect(container.querySelector('.flag')).toBeVisible();
+        expect(container.firstChild).toMatchSnapshot();
     })
 
     it('should show bomb if revealed and exploded', () => {
@@ -68,14 +69,25 @@ describe('BlockComponent', () => {
         );
 
         expect(container.querySelector('.bomb')).toBeVisible();
+        expect(container.firstChild).toMatchSnapshot();
+
     })
 
     it('should show number of nearByBombs if revealed', () => {
 
-        const { queryByText } = render(
+        const { container, queryByText } = render(
             <BlockComponent block={{ revealed: true, nearbyBombs: 2 }} />
         );
 
         expect(queryByText("2")).toBeVisible();
+        expect(container.firstChild).toMatchSnapshot();
+
+    })
+
+    it('should render Block with default state', () => {
+        const block = new Block(position);
+        const { container } = render(<BlockComponent block={block} />);
+
+        expect(container.firstChild).toMatchSnapshot();
     })
 })

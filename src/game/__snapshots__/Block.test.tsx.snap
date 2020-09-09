@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockComponent should render Block with default state 1`] = `
+<div
+  class="block"
+  data-testid="block-2-1"
+>
+  <div
+    class="mine"
+  />
+</div>
+`;
+
+exports[`BlockComponent should show bomb if revealed and exploded 1`] = `
+<div
+  class="block revealed"
+  data-testid="block-undefined-undefined"
+>
+  <div
+    class="bomb"
+  />
+</div>
+`;
+
+exports[`BlockComponent should show flag after right click 1`] = `
+<div
+  class="block"
+  data-testid="block-2-1"
+>
+  <div
+    class="flag"
+  />
+</div>
+`;
+
+exports[`BlockComponent should show number of nearByBombs if revealed 1`] = `
+<div
+  class="block revealed"
+  data-testid="block-undefined-undefined"
+>
+  <div
+    class="nearby-bombs"
+  >
+    2
+  </div>
+</div>
+`;
