@@ -154,3 +154,7 @@ it('should toggle flag of a block', () => {
 })
 
 ``` 
+
+These test will help test most of the functionality of the application. However if you want to also verify the look and feel of of the app, it can get a bit tricky. One simpler approach is to take snapshot of the app when we are satisfied with styles and the compare it on every run to detect any changes.
+
+These snapshots could be like a screenshot of the browser window or you can capture the rendered DOM tree to compare differences. Both of these approaches have their pros and cons. Former can capture small changes in CSS styles where as later can point you to the precise dom location which caused the problem. We can use `jest` for DOM based snapshot testing.
