@@ -19,7 +19,8 @@
     "noEmit": true,
     "jsx": "react",
     "types": [
-      "cypress"
+      "jest",
+      "cypress",
     ]
   },
   "include": [
