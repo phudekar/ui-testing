@@ -43,6 +43,7 @@ class Game extends React.Component {
         return (
             <div>
                 <div className="title">Minesweeper</div>
+                <div className="subtitle">Use right click to flag mines.</div>
                 {
                     this.state.gameComplete && <div className="success">
                         Congratulations! You flagged all the mines.

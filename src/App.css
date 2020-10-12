@@ -42,6 +42,10 @@
   margin: 8px;
 }
 
+.subtitle {
+  margin-bottom: 12px;
+}
+
 .board {
   display: grid;
   justify-content: center;
@@ -69,11 +73,11 @@
 }
 
 .flag {
-  background-image: url("../../flag.jpg");
+  background-image: url("/ui-testing/flag.jpg");
 }
 
 .bomb {
-  background-image: url("../../bomb.png");
+  background-image: url("/ui-testing/bomb.png");
 }
 
 .bomb,
