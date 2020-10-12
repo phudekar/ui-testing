@@ -69,11 +69,11 @@
 }
 
 .flag {
-  background-image: url("/flag.jpg");
+  background-image: url("../../flag.jpg");
 }
 
 .bomb {
-  background-image: url("/bomb.png");
+  background-image: url("../../bomb.png");
 }
 
 .bomb,
