@@ -9,6 +9,8 @@ delayed the feedback cycle. Thus delaying the continuous delivery process.
 
 But today we are mainly going focus on testing Single Page Applications (SPA).
 
+## Levels of Testing
+
 Modern SPA frameworks like React, Angular and Vue.js use component based approach to build UI by composing smaller components together. This provides us an opportunity to test our application logic at component level as well as the complete app as a black box.
 
 Because of this granularity of modern SPA testing our testing pyramid would usually look like following:
@@ -43,7 +45,7 @@ it('should not explode if it does not have mine', () => {
 
 ### 2. Single Component Tests:
 
-By definition UI components are supposed to be individual building blocks of your applications. These should encapsulate all the logic necessary to render and behave in isolation of other components. If you are using writing Pure components, that means that their behavior is predication and depends only on the properties passed to them, then we can render that component in our test environment without the boilerplate code of rest of the application. Then we can test all kind of use case by changing the properties of this component. You can use testing frameworks [Testing Library](https://testing-library.com/) or [Enzyme](https://enzymejs.github.io/enzyme/) which work with `react-dom` to test individual component. 
+By definition UI components are supposed to be individual building blocks of your applications. These should encapsulate all the logic necessary to render and behave in isolation of other components. If you are using writing Pure components, that means that their behavior is predication and depends only on the properties passed to them, then we can render that component in our test environment without the boilerplate code of rest of the application. Then we can test all kind of use case by changing the properties of this component. You can use testing frameworks like [Testing Library](https://testing-library.com/) or [Enzyme](https://enzymejs.github.io/enzyme/) which work with virtual dom to test individual component. 
 
 `src/game/Block.test.ts`is a good example of testing a single component without any other application context.
 
@@ -157,4 +159,6 @@ it('should toggle flag of a block', () => {
 
 These test will help test most of the functionality of the application. However if you want to also verify the look and feel of of the app, it can get a bit tricky. One simpler approach is to take snapshot of the app when we are satisfied with styles and the compare it on every run to detect any changes.
 
-These snapshots could be like a screenshot of the browser window or you can capture the rendered DOM tree to compare differences. Both of these approaches have their pros and cons. Former can capture small changes in CSS styles where as later can point you to the precise dom location which caused the problem. We can use `jest` for DOM based snapshot testing.
+These snapshots could be like a screenshot of the browser window or you can capture the rendered DOM tree to compare differences. Both of these approaches have their pros and cons. Former can capture small changes in CSS styles and where as later can point you to the precise dom location which caused the problem. We can use [Jest](https://jestjs.io/) for DOM based snapshot testing.
+
+## Conclusion
